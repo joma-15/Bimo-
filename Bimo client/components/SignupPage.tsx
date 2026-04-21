@@ -19,7 +19,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
-import { ResponseError } from "expo-auth-session/build/Errors";
+import { SignInMethod } from "firebase/auth";
 
 //required for auth flow
 WebBrowser.maybeCompleteAuthSession();
@@ -46,6 +46,7 @@ export function Signup({ navigation }: Props) {
 
   const slideAnim = useRef(new Animated.Value(600)).current;
 
+  //firebase config
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId:
       "201938807441-i97evbdcsc8v09e2p2lqk907a80shbq4.apps.googleusercontent.com",
@@ -88,6 +89,27 @@ export function Signup({ navigation }: Props) {
 
     // closeModal();
     navigation.navigate("MainDash");
+  };
+
+  const registerUser = async () => {
+    try {
+      const response = await fetch("http://192.168.1.4:5000/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+          date: date,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -240,7 +262,7 @@ export function Signup({ navigation }: Props) {
 
               <TouchableOpacity
                 style={styles.modalButton}
-                onPress={handleSignup}
+                onPress={registerUser}
               >
                 <Text style={styles.modalButtonText}>Create Account</Text>
               </TouchableOpacity>

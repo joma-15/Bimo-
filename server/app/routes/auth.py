@@ -6,10 +6,19 @@ auth_bp = Blueprint("auth", __name__)
 def ping():
     return jsonify({"message": "auth route working"})
 
-@auth_bp.route("/register", methods=["GET"])
-def register(): 
-    return "register is working"
+@auth_bp.route("/register", methods=["POST"])
+def register():
+    #get the request data 
+    data = request.get_json()
 
-@auth_bp.route("login", methods=["GET"])
+    name = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
+     
+    return jsonify({
+        "message" : "register successfully"
+    })
+
+@auth_bp.route("login", methods=["POST"])
 def login(): 
     return "login is working"
