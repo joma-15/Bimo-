@@ -79,17 +79,17 @@ export function Signup({ navigation }: Props) {
     }).start(() => setModalVisible(false));
   };
 
-  const handleSignup = () => {
-    console.log("Sign up with:", {
-      name,
-      email,
-      password,
-      birthdate: date,
-    });
+  // const handleSignup = () => {
+  //   console.log("Sign up with:", {
+  //     name,
+  //     email,
+  //     password,
+  //     birthdate: date,
+  //   });
 
-    // closeModal();
-    navigation.navigate("MainDash");
-  };
+  //   // closeModal();
+  //   navigation.navigate("MainDash");
+  // };
 
   const registerUser = async () => {
     try {
@@ -107,6 +107,7 @@ export function Signup({ navigation }: Props) {
       });
       const data = await response.json();
       console.log(data);
+       navigation.navigate("MainDash");
     } catch (error) {
       console.error(error);
     }
