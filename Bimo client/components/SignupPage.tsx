@@ -102,7 +102,7 @@ export function Signup({ navigation }: Props) {
           name: name,
           email: email,
           password: password,
-          date: date,
+          date:  date ? date.toISOString().split("T")[0] : null,
         }),
       });
       const data = await response.json();
